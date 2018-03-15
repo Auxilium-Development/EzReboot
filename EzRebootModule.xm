@@ -2,6 +2,7 @@
 #import <spawn.h>
 #import <dlfcn.h>
 #import <objc/runtime.h>
+#import <FrontBoardServices/FBSSystemService.h>
 
 
 @interface UIImage ()
@@ -28,7 +29,7 @@
 }
 
 - (void)reboot {
-    [[objc_getClass("FBSSystemService") sharedService] reboot;
+	[[FBSSystemService sharedService] reboot];
     pid_t pid;
     int status;
     const char* args[] = {"kill", "-1", NULL};
