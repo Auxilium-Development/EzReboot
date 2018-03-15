@@ -1,7 +1,7 @@
 #import "EzRebootModule.h"
 #import <spawn.h>
 #import <dlfcn.h>
-
+#import <objc/runtime.h>
 
 
 @interface UIImage ()
@@ -18,17 +18,17 @@
 }
 
 - (BOOL)isSelected {
-	[[objc_getClass("FBSSystemService") sharedService] reboot;
 	return self.EzReboot;
 }
 
 - (void)setSelected:(BOOL)selected {
 	self.EzReboot = selected;
 	[super refreshState];
-    [self kill];
+    [self reboot];
 }
 
-- (void)kill {
+- (void)reboot {
+    [[objc_getClass("FBSSystemService") sharedService] reboot;
     pid_t pid;
     int status;
     const char* args[] = {"kill", "-1", NULL};
