@@ -1,9 +1,11 @@
 #import "EzRebootModule.h"
-#import <spawn.h>
-#import <dlfcn.h>
 #import <objc/runtime.h>
 #import <FrontBoardServices/FBSSystemService.h>
 
+@interface FBSystemService : NSObject
++(id)sharedInstance;
+-(void)shutdownAndReboot:(BOOL)arg1;
+@end
 
 @interface UIImage ()
 + (UIImage *)imageNamed:(NSString *)name inBundle:(NSBundle *)bundle;
@@ -29,11 +31,6 @@
 }
 
 - (void)reboot {
-	[[FBSSystemService sharedService] reboot];
-    pid_t pid;
-    int status;
-    const char* args[] = {"kill", "-1", NULL};
-    posix_spawn(&pid, "/usr/bin/kill", NULL, NULL, (char* const*)args, NULL);
-    waitpid(pid, &status, WEXITED);
+[[%c(FBSystemService) sharedInstance] shutdownAndReboot:YES];
 }
 @end
