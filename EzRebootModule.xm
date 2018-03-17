@@ -17,7 +17,7 @@
 }
 
 - (UIColor *)selectedColor {
-	return [UIColor blueColor];
+	return [UIColor redColor];
 }
 
 - (BOOL)isSelected {
